@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Tables | Restaurant Management System</title>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+
+        <div class="brand">
+            <div class="brand-icon">🍽</div>
+
+            <div>
+                <h2>Restaurant</h2>
+                <span>Management System</span>
+            </div>
+        </div>
+
+        <nav class="navigation">
+
+            <a href="index.html" class="nav-item">
+                <span>▦</span>
+                Dashboard
+            </a>
+
+            <a href="tables.html" class="nav-item active">
+                <span>▤</span>
+                Tables
+            </a>
+
+            <a href="reservations.html" class="nav-item">
+                <span>◷</span>
+                Reservations
+            </a>
+
+            <a href="orders.html" class="nav-item">
+                <span>🛒</span>
+                Orders
+            </a>
+
+            <a href="billing.html" class="nav-item">
+                <span>₹</span>
+                Billing
+            </a>
+
+        </nav>
+
+        <div class="sidebar-footer">
+            <p>Restaurant System</p>
+            <span>Spring Boot + MySQL</span>
+        </div>
+
+    </aside>
+
+
+    <!-- Main Content -->
+    <main class="main-content">
+
+        <!-- Header -->
+        <header class="topbar">
+
+            <div>
+                <h1>Restaurant Tables</h1>
+                <p>Manage restaurant tables and their availability.</p>
+            </div>
+
+            <button class="primary-button" onclick="openTableModal()">
+                + Add Table
+            </button>
+
+        </header>
+
+
+        <!-- Table Statistics -->
+        <section class="stats-grid">
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    🍽
+                </div>
+
+                <div>
+                    <p>Total Tables</p>
+                    <h2 id="totalTables">0</h2>
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    ✓
+                </div>
+
+                <div>
+                    <p>Available</p>
+                    <h2 id="availableTables">0</h2>
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    🪑
+                </div>
+
+                <div>
+                    <p>Occupied</p>
+                    <h2 id="occupiedTables">0</h2>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- Tables Card -->
+        <section class="dashboard-card">
+
+            <div class="card-header">
+
+                <div>
+                    <h2>All Tables</h2>
+                    <p>Current restaurant table status</p>
+                </div>
+
+            </div>
+
+
+            <div class="table-wrapper">
+
+                <table class="data-table">
+
+                    <thead>
+
+                    <tr>
+                        <th>ID</th>
+                        <th>Table Number</th>
+                        <th>Capacity</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+
+                    </thead>
+
+                    <tbody id="tablesContainer">
+
+                    <tr>
+                        <td colspan="5" class="loading">
+                            Loading tables...
+                        </td>
+                    </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<!-- Add / Edit Table Modal -->
+
+<div id="tableModal" class="modal">
+
+    <div class="modal-content">
+
+        <div class="modal-header">
+
+            <div>
+                <h2 id="modalTitle">Add Table</h2>
+                <p>Enter restaurant table details.</p>
+            </div>
+
+            <button class="modal-close" onclick="closeTableModal()">
+                ×
+            </button>
+
+        </div>
+
+
+        <form id="tableForm">
+
+            <input type="hidden" id="tableId">
+
+
+            <div class="form-group">
+
+                <label for="tableNumber">
+                    Table Number
+                </label>
+
+                <input
+                        type="text"
+                        id="tableNumber"
+                        placeholder="Example: T06"
+                        required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="capacity">
+                    Capacity
+                </label>
+
+                <input
+                        type="number"
+                        id="capacity"
+                        min="1"
+                        placeholder="Example: 4"
+                        required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="status">
+                    Status
+                </label>
+
+                <select id="status">
+
+                    <option value="FREE">
+                        FREE
+                    </option>
+
+                    <option value="OCCUPIED">
+                        OCCUPIED
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="modal-actions">
+
+                <button
+                        type="button"
+                        class="secondary-button"
+                        onclick="closeTableModal()">
+                    Cancel
+                </button>
+
+                <button
+                        type="submit"
+                        class="primary-button">
+                    Save Table
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<script src="js/api.js"></script>
+<script src="js/tables.js"></script>
+
+</body>
+
+</html>
