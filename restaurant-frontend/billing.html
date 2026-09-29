@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Billing - Restaurant Management System</title>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<div class="app">
+
+    <aside class="sidebar">
+
+        <div class="brand">
+            <div class="brand-icon">R</div>
+
+            <div>
+                <h2>Restaurant</h2>
+                <span>Management System</span>
+            </div>
+        </div>
+
+        <nav class="navigation">
+
+            <a href="index.html" class="nav-item">
+                <span>▦</span>
+                Dashboard
+            </a>
+
+            <a href="tables.html" class="nav-item">
+                <span>▤</span>
+                Tables
+            </a>
+
+            <a href="reservations.html" class="nav-item">
+                <span>◷</span>
+                Reservations
+            </a>
+
+            <a href="orders.html" class="nav-item">
+                <span>🛒</span>
+                Orders
+            </a>
+
+            <a href="billing.html" class="nav-item active">
+                <span>₹</span>
+                Billing
+            </a>
+
+        </nav>
+
+        <div class="sidebar-footer">
+            <p>Restaurant System</p>
+            <span>Spring Boot + MySQL</span>
+        </div>
+
+    </aside>
+
+
+    <main class="main-content">
+
+        <header class="topbar">
+
+            <div>
+                <h1>Billing</h1>
+
+                <p>
+                    Generate and manage restaurant bills.
+                </p>
+            </div>
+
+        </header>
+
+
+        <!-- STATISTICS -->
+
+        <section class="stats-grid">
+
+            <div class="stat-card">
+
+                <div class="stat-icon">B</div>
+
+                <div>
+                    <p>Total Bills</p>
+                    <h2 id="totalBills">0</h2>
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon">P</div>
+
+                <div>
+                    <p>Paid Bills</p>
+                    <h2 id="paidBills">0</h2>
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon">₹</div>
+
+                <div>
+                    <p>Total Revenue</p>
+                    <h2 id="billingRevenue">₹0.00</h2>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ORDERS READY FOR BILLING -->
+
+        <section class="dashboard-card">
+
+            <div class="card-header">
+
+                <div>
+                    <h2>Orders Ready for Billing</h2>
+
+                    <p>
+                        Generate a bill for an open order.
+                    </p>
+                </div>
+
+            </div>
+
+
+            <div class="table-wrapper">
+
+                <table class="data-table">
+
+                    <thead>
+
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Table</th>
+                        <th>Order Date</th>
+                        <th>Status</th>
+                        <th>Total</th>
+                        <th>Action</th>
+                    </tr>
+
+                    </thead>
+
+
+                    <tbody id="openOrdersContainer">
+
+                    <tr>
+
+                        <td colspan="6" class="loading">
+                            Loading orders...
+                        </td>
+
+                    </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+        <!-- GENERATED BILLS -->
+
+        <section class="dashboard-card">
+
+            <div class="card-header">
+
+                <div>
+                    <h2>Generated Bills</h2>
+
+                    <p>
+                        View previously generated bills.
+                    </p>
+                </div>
+
+            </div>
+
+
+            <div class="table-wrapper">
+
+                <table class="data-table">
+
+                    <thead>
+
+                    <tr>
+                        <th>ID</th>
+                        <th>Bill Number</th>
+                        <th>Order ID</th>
+                        <th>Bill Date</th>
+                        <th>Amount</th>
+                        <th>Payment Status</th>
+                    </tr>
+
+                    </thead>
+
+
+                    <tbody id="billsContainer">
+
+                    <tr>
+
+                        <td colspan="6" class="loading">
+                            Loading bills...
+                        </td>
+
+                    </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<!-- BILL MODAL -->
+
+<div id="billModal" class="modal">
+
+    <div class="modal-content">
+
+        <div class="modal-header">
+
+            <div>
+
+                <h2>Generate Bill</h2>
+
+                <p>
+                    Confirm the order before generating the bill.
+                </p>
+
+            </div>
+
+
+            <button
+                    type="button"
+                    class="modal-close"
+                    onclick="closeBillModal()">
+
+                ×
+
+            </button>
+
+        </div>
+
+
+        <div class="bill-summary">
+
+            <div class="bill-summary-row">
+
+                <span>Order ID</span>
+
+                <strong id="billOrderId">-</strong>
+
+            </div>
+
+
+            <div class="bill-summary-row">
+
+                <span>Table</span>
+
+                <strong id="billTable">-</strong>
+
+            </div>
+
+
+            <div class="bill-summary-row">
+
+                <span>Total Amount</span>
+
+                <strong id="billAmount">₹0.00</strong>
+
+            </div>
+
+        </div>
+
+
+        <div class="modal-actions">
+
+            <button
+                    type="button"
+                    class="secondary-button"
+                    onclick="closeBillModal()">
+
+                Cancel
+
+            </button>
+
+
+            <button
+                    type="button"
+                    class="primary-button"
+                    onclick="generateBill()">
+
+                Generate Bill
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script src="js/api.js"></script>
+<script src="js/billing.js"></script>
+
+</body>
+</html>

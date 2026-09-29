@@ -647,3 +647,125 @@ a {
     gap: 10px;
     margin-top: 25px;
 }
+
+/* =========================================
+   RESERVATIONS PAGE
+   ========================================= */
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+@media (max-width: 600px) {
+
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+
+}
+
+/* =========================================
+   ORDERS PAGE
+   ========================================= */
+
+.item-form-section {
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+}
+
+.item-form-section h3 {
+    margin: 0 0 18px;
+    color: var(--text);
+    font-size: 16px;
+}
+
+.order-item-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    padding: 13px 0;
+    border-bottom: 1px solid var(--border);
+}
+
+.order-item-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.order-item-info strong {
+    color: var(--text);
+}
+
+.order-item-info span {
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.order-item-total {
+    font-weight: 600;
+    color: var(--text);
+}
+
+.order-total-box {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 18px;
+    padding-top: 15px;
+    border-top: 2px solid var(--border);
+    font-weight: 700;
+}
+
+.view-items-button {
+    border: none;
+    border-radius: 8px;
+    padding: 9px 13px;
+    background: #eef2ff;
+    color: #4338ca;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.view-items-button:hover {
+    background: #e0e7ff;
+}
+
+/* =========================================
+   BILLING
+   ========================================= */
+
+.bill-summary {
+    margin-top: 20px;
+    padding: 18px;
+    background: #f8f9fb;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+}
+
+.bill-summary-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+}
+
+.bill-summary-row:last-child {
+    border-bottom: none;
+}
+
+.bill-summary-row span {
+    color: var(--muted);
+    font-size: 14px;
+}
+
+.bill-summary-row strong {
+    color: var(--text);
+    font-size: 15px;
+}

@@ -1,10 +1,471 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Orders | Restaurant Management System</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
 </head>
+
 <body>
 
+<div class="app">
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+        <div class="brand">
+
+            <div class="brand-icon">
+                🍽
+            </div>
+
+            <div>
+                <h2>Restaurant</h2>
+                <span>Management System</span>
+            </div>
+
+        </div>
+
+
+        <nav class="navigation">
+
+            <a href="index.html" class="nav-item">
+
+                <span>▦</span>
+                Dashboard
+
+            </a>
+
+
+            <a href="tables.html" class="nav-item">
+
+                <span>▤</span>
+                Tables
+
+            </a>
+
+
+            <a href="reservations.html" class="nav-item">
+
+                <span>◷</span>
+                Reservations
+
+            </a>
+
+
+            <a href="orders.html" class="nav-item active">
+
+                <span>🛒</span>
+                Orders
+
+            </a>
+
+
+            <a href="billing.html" class="nav-item">
+
+                <span>₹</span>
+                Billing
+
+            </a>
+
+        </nav>
+
+
+        <div class="sidebar-footer">
+
+            <p>Restaurant System</p>
+
+            <span>
+                Spring Boot + MySQL
+            </span>
+
+        </div>
+
+    </aside>
+
+
+    <!-- MAIN CONTENT -->
+
+    <main class="main-content">
+
+        <header class="topbar">
+
+            <div>
+
+                <h1>Orders</h1>
+
+                <p>
+                    Manage restaurant orders and food items.
+                </p>
+
+            </div>
+
+
+            <button
+                    class="primary-button"
+                    onclick="openOrderModal()">
+
+                + Create Order
+
+            </button>
+
+        </header>
+
+
+        <!-- STATISTICS -->
+
+        <section class="stats-grid">
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    🛒
+                </div>
+
+                <div>
+
+                    <p>Total Orders</p>
+
+                    <h2 id="totalOrders">
+                        0
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    ◷
+                </div>
+
+                <div>
+
+                    <p>Open Orders</p>
+
+                    <h2 id="openOrders">
+                        0
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    ₹
+                </div>
+
+                <div>
+
+                    <p>Order Value</p>
+
+                    <h2 id="orderValue">
+                        ₹0
+                    </h2>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ORDERS TABLE -->
+
+        <section class="dashboard-card">
+
+            <div class="card-header">
+
+                <div>
+
+                    <h2>All Orders</h2>
+
+                    <p>
+                        Current restaurant orders
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="table-wrapper">
+
+                <table class="data-table">
+
+                    <thead>
+
+                    <tr>
+
+                        <th>ID</th>
+
+                        <th>Table</th>
+
+                        <th>Date</th>
+
+                        <th>Status</th>
+
+                        <th>Total</th>
+
+                        <th>Actions</th>
+
+                    </tr>
+
+                    </thead>
+
+
+                    <tbody id="ordersContainer">
+
+                    <tr>
+
+                        <td
+                                colspan="6"
+                                class="loading">
+
+                            Loading orders...
+
+                        </td>
+
+                    </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<!-- CREATE ORDER MODAL -->
+
+<div id="orderModal" class="modal">
+
+    <div class="modal-content">
+
+        <div class="modal-header">
+
+            <div>
+
+                <h2>
+                    Create Order
+                </h2>
+
+                <p>
+                    Select a free table to create an order.
+                </p>
+
+            </div>
+
+
+            <button
+                    class="modal-close"
+                    onclick="closeOrderModal()">
+
+                ×
+
+            </button>
+
+        </div>
+
+
+        <form id="orderForm">
+
+            <div class="form-group">
+
+                <label for="orderTable">
+                    Table
+                </label>
+
+                <select
+                        id="orderTable"
+                        required>
+
+                    <option value="">
+                        Select Table
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="modal-actions">
+
+                <button
+                        type="button"
+                        class="secondary-button"
+                        onclick="closeOrderModal()">
+
+                    Cancel
+
+                </button>
+
+
+                <button
+                        type="submit"
+                        class="primary-button">
+
+                    Create Order
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<!-- ORDER ITEMS MODAL -->
+
+<div id="itemsModal" class="modal">
+
+    <div class="modal-content">
+
+        <div class="modal-header">
+
+            <div>
+
+                <h2>
+                    Order Items
+                </h2>
+
+                <p id="itemsOrderInfo">
+                    Add food items to the order.
+                </p>
+
+            </div>
+
+
+            <button
+                    class="modal-close"
+                    onclick="closeItemsModal()">
+
+                ×
+
+            </button>
+
+        </div>
+
+
+        <div id="orderItemsContainer">
+
+            <div class="loading">
+                Loading items...
+            </div>
+
+        </div>
+
+
+        <div class="item-form-section">
+
+            <h3>
+                Add Food Item
+            </h3>
+
+
+            <div class="form-group">
+
+                <label for="itemName">
+                    Item Name
+                </label>
+
+                <input
+                        type="text"
+                        id="itemName"
+                        placeholder="Example: Chicken Biryani">
+
+            </div>
+
+
+            <div class="form-row">
+
+                <div class="form-group">
+
+                    <label for="itemQuantity">
+                        Quantity
+                    </label>
+
+                    <input
+                            type="number"
+                            id="itemQuantity"
+                            min="1"
+                            value="1">
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="itemPrice">
+                        Unit Price
+                    </label>
+
+                    <input
+                            type="number"
+                            id="itemPrice"
+                            min="0"
+                            step="0.01"
+                            placeholder="Example: 250">
+
+                </div>
+
+            </div>
+
+
+            <button
+                    type="button"
+                    class="primary-button"
+                    onclick="addOrderItem()">
+
+                + Add Item
+
+            </button>
+
+        </div>
+
+
+        <div class="modal-actions">
+
+            <button
+                    type="button"
+                    class="secondary-button"
+                    onclick="closeItemsModal()">
+
+                Close
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script src="js/api.js"></script>
+
+<script src="js/orders.js"></script>
+
 </body>
+
 </html>

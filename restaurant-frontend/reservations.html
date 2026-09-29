@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Reservations | Restaurant Management System</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+        <div class="brand">
+
+            <div class="brand-icon">
+                🍽
+            </div>
+
+            <div>
+                <h2>Restaurant</h2>
+                <span>Management System</span>
+            </div>
+
+        </div>
+
+
+        <nav class="navigation">
+
+            <a href="index.html" class="nav-item">
+
+                <span>▦</span>
+                Dashboard
+
+            </a>
+
+
+            <a href="tables.html" class="nav-item">
+
+                <span>▤</span>
+                Tables
+
+            </a>
+
+
+            <a href="reservations.html" class="nav-item active">
+
+                <span>◷</span>
+                Reservations
+
+            </a>
+
+
+            <a href="orders.html" class="nav-item">
+
+                <span>🛒</span>
+                Orders
+
+            </a>
+
+
+            <a href="billing.html" class="nav-item">
+
+                <span>₹</span>
+                Billing
+
+            </a>
+
+        </nav>
+
+
+        <div class="sidebar-footer">
+
+            <p>Restaurant System</p>
+
+            <span>
+                Spring Boot + MySQL
+            </span>
+
+        </div>
+
+    </aside>
+
+
+    <!-- MAIN CONTENT -->
+
+    <main class="main-content">
+
+        <header class="topbar">
+
+            <div>
+
+                <h1>Reservations</h1>
+
+                <p>
+                    Manage customer reservations and table bookings.
+                </p>
+
+            </div>
+
+
+            <button
+                    class="primary-button"
+                    onclick="openReservationModal()">
+
+                + New Reservation
+
+            </button>
+
+        </header>
+
+
+        <!-- STATISTICS -->
+
+        <section class="stats-grid">
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    📅
+                </div>
+
+                <div>
+
+                    <p>Total Reservations</p>
+
+                    <h2 id="totalReservations">
+                        0
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    ✓
+                </div>
+
+                <div>
+
+                    <p>Confirmed</p>
+
+                    <h2 id="confirmedReservations">
+                        0
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    👥
+                </div>
+
+                <div>
+
+                    <p>Total Guests</p>
+
+                    <h2 id="totalGuests">
+                        0
+                    </h2>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- RESERVATIONS TABLE -->
+
+        <section class="dashboard-card">
+
+            <div class="card-header">
+
+                <div>
+
+                    <h2>All Reservations</h2>
+
+                    <p>
+                        Current customer reservation details
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="table-wrapper">
+
+                <table class="data-table">
+
+                    <thead>
+
+                    <tr>
+
+                        <th>ID</th>
+
+                        <th>Customer</th>
+
+                        <th>Phone</th>
+
+                        <th>Table</th>
+
+                        <th>Date</th>
+
+                        <th>Time</th>
+
+                        <th>Guests</th>
+
+                        <th>Status</th>
+
+                        <th>Actions</th>
+
+                    </tr>
+
+                    </thead>
+
+
+                    <tbody id="reservationsContainer">
+
+                    <tr>
+
+                        <td
+                                colspan="9"
+                                class="loading">
+
+                            Loading reservations...
+
+                        </td>
+
+                    </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<!-- RESERVATION MODAL -->
+
+<div id="reservationModal" class="modal">
+
+    <div class="modal-content">
+
+        <div class="modal-header">
+
+            <div>
+
+                <h2 id="reservationModalTitle">
+                    New Reservation
+                </h2>
+
+                <p>
+                    Enter customer reservation details.
+                </p>
+
+            </div>
+
+
+            <button
+                    class="modal-close"
+                    onclick="closeReservationModal()">
+
+                ×
+
+            </button>
+
+        </div>
+
+
+        <form id="reservationForm">
+
+            <input
+                    type="hidden"
+                    id="reservationId">
+
+
+            <!-- CUSTOMER NAME -->
+
+            <div class="form-group">
+
+                <label for="customerName">
+                    Customer Name
+                </label>
+
+                <input
+                        type="text"
+                        id="customerName"
+                        placeholder="Example: Arun Kumar"
+                        required>
+
+            </div>
+
+
+            <!-- PHONE -->
+
+            <div class="form-group">
+
+                <label for="phone">
+                    Phone Number
+                </label>
+
+                <input
+                        type="text"
+                        id="phone"
+                        placeholder="Example: 9876543210"
+                        required>
+
+            </div>
+
+
+            <!-- TABLE -->
+
+            <div class="form-group">
+
+                <label for="reservationTable">
+                    Table
+                </label>
+
+                <select
+                        id="reservationTable"
+                        required>
+
+                    <option value="">
+                        Select Table
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- DATE -->
+
+            <div class="form-group">
+
+                <label for="reservationDate">
+                    Reservation Date
+                </label>
+
+                <input
+                        type="date"
+                        id="reservationDate"
+                        required>
+
+            </div>
+
+
+            <!-- TIME -->
+
+            <div class="form-row">
+
+                <div class="form-group">
+
+                    <label for="startTime">
+                        Start Time
+                    </label>
+
+                    <input
+                            type="time"
+                            id="startTime"
+                            required>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="endTime">
+                        End Time
+                    </label>
+
+                    <input
+                            type="time"
+                            id="endTime"
+                            required>
+
+                </div>
+
+            </div>
+
+
+            <!-- PARTY SIZE -->
+
+            <div class="form-group">
+
+                <label for="partySize">
+                    Number of Guests
+                </label>
+
+                <input
+                        type="number"
+                        id="partySize"
+                        min="1"
+                        placeholder="Example: 4"
+                        required>
+
+            </div>
+
+
+            <!-- STATUS -->
+
+            <div class="form-group">
+
+                <label for="reservationStatus">
+                    Status
+                </label>
+
+                <select id="reservationStatus">
+
+                    <option value="CONFIRMED">
+                        CONFIRMED
+                    </option>
+
+                    <option value="CANCELLED">
+                        CANCELLED
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- BUTTONS -->
+
+            <div class="modal-actions">
+
+                <button
+                        type="button"
+                        class="secondary-button"
+                        onclick="closeReservationModal()">
+
+                    Cancel
+
+                </button>
+
+
+                <button
+                        type="submit"
+                        class="primary-button">
+
+                    Save Reservation
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<!-- JAVASCRIPT -->
+
+<script src="js/api.js"></script>
+
+<script src="js/reservations.js"></script>
+
+</body>
+
+</html>
